@@ -20,14 +20,15 @@ const Home = () => {
           <button className='btn'><img src={Playbutton} alt="" />Play</button>
           <button className='btn dark-btn'><img src={info} alt="" />More Info</button>
           </div>
-         <TitleCards/>
+          <TitleCards title={"Now trending"} category={"now_playing"}/>
         </div>
       </div>
       <div className="moreCards">
-      <TitleCards title={"Now trending"} category={"now_playing"}/>
       <TitleCards title={"Picked for you"} category={"top_rated"}/> 
-      <TitleCards title={"Since you watched Marsian"} category={"upcoming"}/> 
-      <TitleCards title={"Suggestions"} category={"top_rated"}/>  
+      <TitleCards title={"Since you watched Marsian"} category={"upcoming"}/>   
+      </div>
+      <div className="top">
+      <TitleCards title={"Suggestions"} category={"popular"}/>
       </div>
     <Footer/>
     </div>

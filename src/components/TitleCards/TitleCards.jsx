@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import './TitleCards.css'
 import cards_data from '../../assets/Cards/Cards_data'
 import { useRef,useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const TitleCards = ({title,category}) => {
   const [apiData, setapiData]= React.useState([])
@@ -32,10 +33,10 @@ fetch(`https://api.themoviedb.org/3/movie/${category?category:"now_playing"}?lan
       <h2>{title?title:"Popular on Netflix"}</h2>
       <div className="card-list" ref ={cardsRef}>
         {apiData.map((card, index) => {
-          return <div className="card" key={index}>
+          return <Link to={`/player/${card.id}`} className="card" key={index}>
           <img src={`https://image.tmdb.org/t/p/w500`+ card.backdrop_path} alt="" />
           <p>{card.original_title}</p>
-          </div>
+          </Link>
         })}
       </div>
     </div>
