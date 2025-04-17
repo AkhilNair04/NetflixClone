@@ -1,35 +1,99 @@
-import React from 'react'
-import './Login.css'
-import logos from '../../assets/logos.png'
-const Login = () => {
+import React from 'react';
+import './Login.css';
+import logos from '../../assets/logos.png';
+import { login, signup } from '../../firebase';
 
-  const [signState,setSignState] = React.useState("Sign In")
+const Login = () => {
+  const [signState, setSignState] = React.useState("Sign In");
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const user_auth = async (event) => {
+    event.preventDefault();
+  
+    // Basic validation
+    const isValidEmail = (email) =>
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  
+    if (!email || !password || (signState === "Sign Up" && !name)) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+  
+    if (!isValidEmail(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+  
+    try {
+      if (signState === "Sign In") {
+        await login(email, password);
+      } else {
+        await signup(name, email, password);
+      }
+    } catch (error) {
+      console.log("Authentication Error:", error);
+      alert(`Authentication Error: ${error.message}`);
+    }
+  };
+
   return (
-    <div className='login'>
-      <img src={logos} alt="" className="loginlogo"/>
+    <div className="login">
+      <img src={logos} alt="Logo" className="loginlogo" />
       <div className="login-form">
         <h1>{signState}</h1>
-        <form >
-          <input type="email" placeholder='Email' className='login-input' />
-          <input type="password" placeholder='Password' className='login-input' />
-          {signState=="Sign Up" ? <input type="password" placeholder='Confirm Password' className='login-input'/>:<></>}
-          <button>{signState}</button>
+        <form>
+          {signState === "Sign Up" && (
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              type="text"
+              placeholder="Name"
+              className="login-input"
+            />
+          )}
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="Email"
+            className="login-input"
+          />
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="Password"
+            className="login-input"
+          />
+          <button onClick={user_auth} type="submit">
+            {signState}
+          </button>
           <div className="form-help">
             <div className="remember">
-              <input type="checkbox"/>
-              <label htmlFor="">Remember me</label>
+              <input type="checkbox" id="remember" />
+              <label htmlFor="remember">Remember me</label>
             </div>
             <p>Need Help</p>
           </div>
         </form>
         <div className="form-switch">
-          {signState=="Sign In" ? 
-          <p>New to Netflix? <span onClick={()=>{setSignState("Sign Up")}}>Sign Up</span></p>
-          :<p>Already a Member? <span onClick={()=>{setSignState("Sign In")}}>Sign In</span></p>}
+          {signState === "Sign In" ? (
+            <p>
+              New to Netflix?{" "}
+              <span onClick={() => setSignState("Sign Up")}>Sign Up</span>
+            </p>
+          ) : (
+            <p>
+              Already a Member?{" "}
+              <span onClick={() => setSignState("Sign In")}>Sign In</span>
+            </p>
+          )}
         </div>
-        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
