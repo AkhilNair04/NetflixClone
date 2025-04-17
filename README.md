@@ -97,4 +97,5 @@ MIT License
 
 
 ## Contact
-You can reach me at [helloakhilnair@gmail.com](Akhil).
+You can reach me through 
+>Akhil Nair: helloakhilnair@gmail.com.
