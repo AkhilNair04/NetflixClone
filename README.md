@@ -1,4 +1,4 @@
-# Netflix Clone React App
+# Netflix UI Clone using REACT and CSS
 
 This project is a Netflix-like UI built with React. It supports user authentication with Firebase and includes features like login/signup, loading screen, navbar with dropdown, and more.
 
